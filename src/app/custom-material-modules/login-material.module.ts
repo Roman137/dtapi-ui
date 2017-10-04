@@ -6,4 +6,4 @@ import {MdButtonModule, MdCardModule, MdCheckboxModule, MdInputModule} from '@an
   imports: [MdButtonModule, MdCheckboxModule, MdInputModule, MdCardModule],
   exports: [MdButtonModule, MdCheckboxModule, MdInputModule, MdCardModule]
 })
-export class LoginCustomMaterialModule {}
+export class LoginMaterialModule {}

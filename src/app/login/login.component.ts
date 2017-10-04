@@ -25,7 +25,6 @@ export class LoginComponent implements OnInit {
     if (this.loginService.login(this.credentials)) {
       this.router.navigate(['']);
     } else {
-      /// TODO: login error
       this.router.navigate(['']);
     }
   }

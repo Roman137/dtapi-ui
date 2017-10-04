@@ -1,21 +1,21 @@
 import {NgModule} from '@angular/core';
-import {Router, RouterModule} from '@angular/router';
+import {RouterModule} from '@angular/router';
 import {LoginComponent} from './login.component';
-import {LoginGuard} from './login.guard';
-import {NOT_LOGGED_IN_GUARD_TOKEN, notLoggedInGuardFactory} from './not-logged-in.guard';
-import {LoginService} from './services/login.service';
+import {LoggedInGuard} from './guards/logged-in.guard';
+import {LogoutComponent} from './logout/logout.component';
+import {NotLoggedInGuard} from './guards/not-logged-in.guard';
+import {loginUriConfig} from './services/config/login-uri.config';
 
 const loginRoutes = [
   {
-    path: 'login',
+    path: loginUriConfig.login,
     component: LoginComponent,
-    canActivate: [ NOT_LOGGED_IN_GUARD_TOKEN]
+    canActivate: [NotLoggedInGuard]
   },
   {
-    path: 'logout',
-    redirectTo: 'login',
-    pathMatch: 'full',
-    canActivate: [LoginGuard]
+    path: loginUriConfig.logout,
+    component: LogoutComponent,
+    canActivate: [LoggedInGuard]
   }
 ];
 
@@ -24,10 +24,11 @@ const loginRoutes = [
     RouterModule.forChild(loginRoutes)
   ],
   exports: [
-    RouterModule,
+    RouterModule
   ],
   providers: [
-    {provide: NOT_LOGGED_IN_GUARD_TOKEN, useFactory: notLoggedInGuardFactory, deps: [LoginService, Router]}
+    LoggedInGuard,
+    NotLoggedInGuard
   ]
 })
 export class LoginRoutingModule {

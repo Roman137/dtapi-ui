@@ -1,6 +1,5 @@
-import { Injectable } from '@angular/core';
-import {loginConfig} from './config/login-service.config';
-import {LoginService} from './login.service';
+import {Injectable} from '@angular/core';
+import {authUriConfig} from './config/auth-uri.config';
 import {LoginSuccess} from './entities/login-success';
 import {User} from './entities/user';
 import {HttpClient} from '@angular/common/http';
@@ -24,17 +23,17 @@ export class AuthService {
   }
 
   isLoggedIn(): Observable<User> {
-    return this.http.get<LoginSuccess>(loginConfig.isLogged)
+    return this.http.get<LoginSuccess>(authUriConfig.isLogged)
       .map(AuthService.loginSuccess);
   }
 
   login(credentials: Credentials): Observable<User> {
-    return this.http.post<LoginSuccess>(loginConfig.login, credentials)
+    return this.http.post<LoginSuccess>(authUriConfig.login, credentials)
       .map(AuthService.loginSuccess);
   }
 
-  logout(): Observable<User> {
-    return this.http.get<LogoutSuccess>(loginConfig.logout).map(() => null);
+  logout(): Observable<any> {
+    return this.http.get(authUriConfig.logout);
   }
 
 }

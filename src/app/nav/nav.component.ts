@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {LoginService} from '../login/services/login.service';
-import {Router} from '@angular/router';
+import {loginUriConfig} from '../login/services/config/login-uri.config';
 
 @Component({
   selector: 'app-nav',
@@ -10,22 +10,14 @@ import {Router} from '@angular/router';
 export class NavComponent implements OnInit {
 
   paths = [
-    {value: 'login', desc: 'Login'}
-    ];
-  logoutLinkDesc = 'Logout';
+    {value: loginUriConfig.login, desc: 'Login'},
+    {value: loginUriConfig.logout, desc: 'Logout'}
+  ];
 
-  constructor(public loginService: LoginService, private router: Router) {
+  constructor(public loginService: LoginService) {
   }
 
   ngOnInit() {
-  }
-
-  logout() {
-    if (this.loginService.logout()) {
-      this.router.navigate(['']);
-    } else {
-      /// TODO: logout error
-    }
   }
 
 }

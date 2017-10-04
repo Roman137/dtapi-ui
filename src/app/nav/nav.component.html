@@ -1,5 +1,4 @@
 <nav>
   <a *ngFor="let path of paths" [routerLink]="path.value">{{path.desc}}</a>
-  <a (click)="logout()" routerLink="/logout">{{logoutLinkDesc}}</a>
   <span *ngIf="loginService.isLoggedIn()">{{loginService.user.username}}</span>
 </nav>
