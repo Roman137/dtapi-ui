@@ -9,16 +9,20 @@ import {WelcomeComponent} from './welcome/welcome.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {DomainUrlAppenderInterceptor} from './shared/domain-url-appender.interceptor';
+import {AppMaterialModule} from './custom-material-modules/app-material.module';
+import { WelcomePipe } from './welcome/welcome.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    WelcomePipe
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    AppMaterialModule,
     AppRoutingModule,
     LoginModule
   ],

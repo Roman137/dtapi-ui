@@ -1,4 +1,18 @@
 <nav>
-  <a *ngFor="let path of paths" [routerLink]="path.value">{{path.desc}}</a>
-  <span *ngIf="loginService.isLoggedIn()">{{loginService.user.username}}</span>
+  <md-toolbar color="default">
+    <a md-button color="primary" [routerLink]="'/'" routerLinkActive="mat-accent"
+       [routerLinkActiveOptions]="{exact: true}">
+      <md-icon>home</md-icon>
+    </a>
+    <a md-raised-button *ngIf="!loginService.isLoggedIn()" color="primary" style="margin-left: auto"
+       [routerLink]="loginPath.value" routerLinkActive="login active">
+      {{loginPath.desc}}
+    </a>
+    <span *ngIf="loginService.isLoggedIn()" style="margin-left: auto">Logged in as {{loginService.user.username | uppercase}}</span>
+    <a md-button *ngIf="loginService.isLoggedIn()" color="primary" [routerLink]="logoutPath.value"
+       routerLinkActive="mat-accent">
+      {{logoutPath.desc}}
+    </a>
+  </md-toolbar>
 </nav>
+

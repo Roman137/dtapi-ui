@@ -22,11 +22,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    if (this.loginService.login(this.credentials)) {
-      this.router.navigate(['']);
-    } else {
-      this.router.navigate(['']);
-    }
+    this.loginService.login(this.credentials);
   }
 
 }
