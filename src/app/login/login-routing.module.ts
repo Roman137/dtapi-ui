@@ -3,7 +3,8 @@ import {RouterModule} from '@angular/router';
 import {LoginComponent} from './login.component';
 
 const loginRoutes = [
-  {path: 'login', component: LoginComponent}
+  {path: 'login', component: LoginComponent},
+  {path: 'logout', redirectTo: '', pathMatch: 'full'}
 ];
 
 @NgModule({

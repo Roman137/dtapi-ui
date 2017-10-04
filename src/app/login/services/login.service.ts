@@ -17,25 +17,36 @@ export class LoginService {
 
   user: User = null;
 
+  static responseToUser(loginSuccess: LoginSuccess): User {
+    if (loginSuccess.response === 'logged') {
+      return <User>loginSuccess;
+    }
+    if (loginSuccess.response === 'ok') {
+      return <User>loginSuccess;
+    }
+    return null;
+  }
+
   constructor(private http: HttpClient) {
+    log.info('is logged in ? : ', this.isLoggedIn());
   }
 
   isLoggedIn(): boolean {
-    this.http.get<string>(loginConfig.isLogged).subscribe(
-      response => {
-        const res = JSON.parse(response);
-        if (res instanceof User) {
-          this.user = res;
-          log.info('user is logged in', 'user', this.user);
-          return true;
-        } else {
-          this.user = null;
-          log.info('user is logged not in', 'user', this.user);
-          return false;
-        }
-      }
-    );
-    return false;
+    return null !=
+      this.http.get<LoginSuccess>(loginConfig.isLogged)
+        .map(LoginService.responseToUser)
+        .subscribe(
+          user => {
+            this.user = user;
+            log.info('user is logged in', 'this.user', this.user);
+            return user;
+          },
+          err => {
+            this.user = null;
+            log.warn('user is not logged in', 'err', err);
+            return null;
+          }
+        );
   }
 
   isLoggedInSoft(): boolean {
@@ -43,41 +54,39 @@ export class LoginService {
   }
 
   login(credentials: Credentials): boolean {
-    this.http.post<LoginSuccess>(loginConfig.login, credentials)
-      .subscribe(
-        (response) => {
-          log.info('response', response);
-          if (response.response === 'ok') {
-            this.user = new User();
-            this.user.username = response.username;
-            this.user.id = response.id;
-            this.user.roles = response.roles;
-            log.info('logging in was successful', 'user', this.user);
-            return true;
-          } else {
-            log.warn('logging in was unsuccessful', 'response', response.response);
-            return false;
+    return null !=
+      this.http.post<LoginSuccess>(loginConfig.login, credentials)
+        .map(LoginService.responseToUser)
+        .subscribe(
+          user => {
+            if (user) {
+              this.user = user;
+              log.info('logging in was successful', 'user', this.user);
+            } else {
+              log.info('logging in was unsuccessful', 'user', this.user);
+            }
+            return user;
+          },
+          err => {
+            log.error('error during logging in', 'err', err);
+            return null;
           }
-        },
-        err => {
-          log.error('error during logging in', 'err', err);
-        }
-      );
-    return false;
+        );
   }
 
   logout(): boolean {
-    this.http.get<LogoutSuccess>(loginConfig.logout).subscribe(
-      response => {
-        this.user = null;
-        log.info('logged out successfully', 'user', this.user);
-        return true;
-      },
-      err => {
-        log.warn('logged out unsuccessfully', 'err', err);
-      }
-    );
-    return false;
+    return null !=
+      this.http.get<LogoutSuccess>(loginConfig.logout).subscribe(
+        response => {
+          this.user = null;
+          log.info('logged out successfully', 'response', response);
+          return true;
+        },
+        err => {
+          log.warn('logged out unsuccessfully', 'err', err);
+          return null;
+        }
+      );
   }
 
 }

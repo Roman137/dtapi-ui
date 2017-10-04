@@ -5,6 +5,7 @@ import {LoginService} from './services/login.service';
 import {LoginCustomMaterialModule} from '../custom-material-module/login-custom-material.module';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
+import {CookieService} from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import {FormsModule} from '@angular/forms';
     FormsModule
   ],
   providers: [
-    LoginService
+    LoginService,
+    CookieService
   ]
 })
 export class LoginModule {

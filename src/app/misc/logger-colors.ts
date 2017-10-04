@@ -1,5 +1,6 @@
 export const loggerColors = {
   service: 'blue',
   component: 'green',
-  directive: 'orange'
+  directive: 'orange',
+  http: 'yellow'
 };
