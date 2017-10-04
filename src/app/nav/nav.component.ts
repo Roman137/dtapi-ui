@@ -21,7 +21,7 @@ export class NavComponent implements OnInit {
   }
 
   logout() {
-    if(this.loginService.logout()){
+    if (this.loginService.logout()) {
       this.router.navigate(['']);
     } else {
       /// TODO: logout error

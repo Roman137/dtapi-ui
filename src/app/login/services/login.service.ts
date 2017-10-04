@@ -3,88 +3,72 @@ import {Credentials} from './entities/credentials';
 import {User} from './entities/user';
 import {Log} from 'ng2-logger';
 import {loggerColors} from '../../misc/logger-colors';
-import {loginConfig} from './config/login-service.config';
-import {HttpClient} from '@angular/common/http';
-import {LogoutSuccess} from './entities/logout-success';
-import {LoginSuccess} from './entities/login-success';
 import 'rxjs/add/operator/map';
+import {AuthService} from './auth.service';
 
-const log = Log.create('LoginService');
-log.color = loggerColors.service;
 
 @Injectable()
 export class LoginService {
 
   user: User = null;
 
-  static responseToUser(loginSuccess: LoginSuccess): User {
-    if (loginSuccess.response === 'logged') {
-      return <User>loginSuccess;
-    }
-    if (loginSuccess.response === 'ok') {
-      return <User>loginSuccess;
-    }
-    return null;
+  redirectUrl: string = null;
+
+  private log = Log.create('LoginService');
+
+  constructor(private auth: AuthService) {
+    this.log.color = loggerColors.service;
+    this.log.info('is logged in ? : ', this.recheckLogin());
   }
 
-  constructor(private http: HttpClient) {
-    log.info('is logged in ? : ', this.isLoggedIn());
-  }
-
-  isLoggedIn(): boolean {
-    return null !=
-      this.http.get<LoginSuccess>(loginConfig.isLogged)
-        .map(LoginService.responseToUser)
+  recheckLogin() {
+      this.auth.isLoggedIn()
         .subscribe(
           user => {
             this.user = user;
-            log.info('user is logged in', 'this.user', this.user);
-            return user;
+            if (user) {
+              this.log.info('user is logged in', 'this.user', this.user);
+            } else {
+              this.log.warn('user is not logged in', 'user', user);
+            }
           },
           err => {
             this.user = null;
-            log.warn('user is not logged in', 'err', err);
-            return null;
+            this.log.warn('user is not logged in', 'err', err);
           }
         );
   }
 
-  isLoggedInSoft(): boolean {
+  isLoggedIn() {
     return this.user != null;
   }
 
-  login(credentials: Credentials): boolean {
-    return null !=
-      this.http.post<LoginSuccess>(loginConfig.login, credentials)
-        .map(LoginService.responseToUser)
+  login(credentials: Credentials) {
+      this.auth.login(credentials)
         .subscribe(
           user => {
+            this.user = user;
             if (user) {
-              this.user = user;
-              log.info('logging in was successful', 'user', this.user);
+              this.log.info('logging in was successful', 'user', this.user);
             } else {
-              log.info('logging in was unsuccessful', 'user', this.user);
+              this.log.info('logging in was unsuccessful', 'user', this.user);
             }
-            return user;
           },
           err => {
-            log.error('error during logging in', 'err', err);
-            return null;
+            this.user = null;
+            this.log.error('error during logging in', 'err', err);
           }
         );
   }
 
-  logout(): boolean {
-    return null !=
-      this.http.get<LogoutSuccess>(loginConfig.logout).subscribe(
+  logout() {
+      this.auth.logout().subscribe(
         response => {
           this.user = null;
-          log.info('logged out successfully', 'response', response);
-          return true;
+          this.log.info('logged out successfully', 'response', response);
         },
         err => {
-          log.warn('logged out unsuccessfully', 'err', err);
-          return null;
+          this.log.warn('logged out unsuccessfully', 'err', err);
         }
       );
   }

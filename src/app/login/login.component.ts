@@ -26,6 +26,7 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['']);
     } else {
       /// TODO: login error
+      this.router.navigate(['']);
     }
   }
 
