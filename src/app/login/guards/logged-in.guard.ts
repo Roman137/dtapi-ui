@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular/router';
-import {LoginService} from '../../shared/services/login.service';
+import {LoginService} from '../services/login.service';
 import {Log} from 'ng2-logger';
 import {loggerColors} from '../../shared/logger/logger-colors';
 import {Observable} from 'rxjs/Observable';
@@ -16,7 +16,6 @@ export class LoggedInGuard implements CanActivate {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-    const url: string = state.url;
-    return Observable.of(this.loginService.user.isLogged());
+    return this.loginService.isLoggedIn().map(user => user.isLogged());
   }
 }

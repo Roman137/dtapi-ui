@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Credentials} from './services/entities/credentials';
-import {LoginService} from '../shared/services/login.service';
-import {createLogger} from '../shared/logger/logger.factory';
+import {LoginService} from './services/login.service';
 
 @Component({
   selector: 'app-login',
@@ -26,5 +25,3 @@ export class LoginComponent implements OnInit {
   }
 
 }
-
-const log = createLogger(LoginComponent);

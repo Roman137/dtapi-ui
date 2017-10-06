@@ -5,4 +5,5 @@ export const loggerColors = {
   http: 'yellow',
   guard: 'grey',
   utils: 'brown',
+  resolver: 'aqua'
 };

@@ -12,7 +12,6 @@ import {DomainUrlAppenderInterceptor} from './shared/interceptors/domain-url-app
 import {AppMaterialModule} from './custom-material-modules/app-material.module';
 import {WelcomePipe} from './welcome/welcome.pipe';
 import {AdminModule} from './admin/admin.module';
-import {LoginService} from './shared/services/login.service';
 
 @NgModule({
   declarations: [
@@ -30,8 +29,7 @@ import {LoginService} from './shared/services/login.service';
     AppRoutingModule,
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: DomainUrlAppenderInterceptor, multi: true},
-    LoginService
+    {provide: HTTP_INTERCEPTORS, useClass: DomainUrlAppenderInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })

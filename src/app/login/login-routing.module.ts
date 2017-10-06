@@ -4,11 +4,12 @@ import {LoginComponent} from './login.component';
 import {LoggedInGuard} from './guards/logged-in.guard';
 import {LogoutComponent} from './logout/logout.component';
 import {NotLoggedInGuard} from './guards/not-logged-in.guard';
-import {defaultLoginUriConfig} from '../shared/services/login-uri.default.config';
+import {defaultLoginUriConfig} from '../shared/config/login-uri.default.config';
+import {RedirectAfterLoginPathSaverGuard} from './guards/redirect-after-login-path-saver.guard';
 
 const loginRoutes = [
   {
-    path: defaultLoginUriConfig.login,
+    path: defaultLoginUriConfig.login, /// TODO: injectable loginUrlConfig
     component: LoginComponent,
     canActivate: [NotLoggedInGuard]
   },
@@ -28,7 +29,8 @@ const loginRoutes = [
   ],
   providers: [
     LoggedInGuard,
-    NotLoggedInGuard
+    NotLoggedInGuard,
+    RedirectAfterLoginPathSaverGuard
   ]
 })
 export class LoginRoutingModule {

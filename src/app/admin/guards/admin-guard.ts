@@ -1,11 +1,11 @@
 import {Injectable, Optional} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
-import {LoginService} from '../shared/services/login.service';
+import {LoginService} from '../../login/services/login.service';
 import {Observable} from 'rxjs/Observable';
-import {createLogger} from '../shared/logger/logger.factory';
-import {LoginUriConfig} from '../shared/services/login-uri.config';
-import {defaultLoginUriConfig} from '../shared/services/login-uri.default.config';
+import {LoginUriConfig} from '../../login/services/login-uri.config';
+import {defaultLoginUriConfig} from '../../shared/config/login-uri.default.config';
 import 'rxjs/add/operator/switchMap';
+import {User} from '../../login/services/entities/user';
 
 @Injectable()
 export class AdminGuard implements CanActivate {
@@ -18,20 +18,17 @@ export class AdminGuard implements CanActivate {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-    const url: string = state.url;
+    this.loginService.redirectAfterLogin = state.url;
 
-    return this.loginService.isLoggedIn().map(user => user.isAdmin())
+    const obs: Observable<User> = this.loginService.isLoggedIn();
+
+    return obs
+      .map(user => user.isAdmin())
       .do(isAdmin => {
-          log.info('is admin', isAdmin);
           if (!isAdmin) {
-            this.loginService.redirectUrl = url;
-            log.info('from url', this.loginService.redirectUrl);
             this.router.navigate(['/' + this.loginUriConfig.login]);
-            log.info('redirected for authentication to', '/' + this.loginUriConfig.login);
           }
         }
       );
   }
 }
-
-const log = createLogger(AdminGuard);

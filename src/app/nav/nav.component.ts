@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {LoginService} from '../shared/services/login.service';
-import {createLogger} from '../shared/logger/logger.factory';
-import {defaultLoginUriConfig} from '../shared/services/login-uri.default.config';
+import {LoginService} from '../login/services/login.service';
+import {defaultLoginUriConfig} from '../shared/config/login-uri.default.config';
 
 @Component({
   selector: 'app-nav',
@@ -20,5 +19,3 @@ export class NavComponent implements OnInit {
   }
 
 }
-
-const log = createLogger(NavComponent);

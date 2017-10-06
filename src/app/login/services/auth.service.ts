@@ -7,7 +7,6 @@ import {Credentials} from './entities/credentials';
 import 'rxjs/add/operator/timeout';
 import {AuthConfig} from './config/auth.config';
 import {defaultAuthConfig} from './config/auth.default.config';
-import {createLogger} from '../../shared/logger/logger.factory';
 import {RequestParams} from './params/request-params';
 
 @Injectable()
@@ -52,5 +51,3 @@ export class AuthService {
   }
 
 }
-
-const log = createLogger(AuthService);
