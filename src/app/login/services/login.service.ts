@@ -22,12 +22,14 @@ export class LoginService {
   private isLoggedInConnectable: ConnectableObservable<User> = null;
   private logoutInConnectable: ConnectableObservable<User> = null;
 
+  private initialized = false;
+
   constructor(private auth: AuthService, private router: Router) {
-    this.isLoggedIn().subscribe();
+    this.initialize();
   }
 
   isLoggedIn(): Observable<User> {
-    if (this.user.isLogged()) {
+    if (this.user.isLogged() || this.initialized) {
       return Observable.of(this.user);
     }
     return this.isLoggedInConnectable || this.establishHotConnectionForIsLoggedIn();
@@ -45,6 +47,12 @@ export class LoginService {
 
   logout(): Observable<User> {
     return this.logoutInConnectable || this.establishHotConnectionForIsLogout();
+  }
+
+  private initialize() {
+    this.isLoggedIn()
+      .do(() => this.initialized = true)
+      .subscribe();
   }
 
   private getRedirectionUrl(): string {
