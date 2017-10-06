@@ -1,39 +1,56 @@
-import {Injectable} from '@angular/core';
-import {authUriConfig} from './config/auth-uri.config';
+import {Injectable, Optional} from '@angular/core';
 import {LoginSuccess} from './entities/login-success';
 import {User} from './entities/user';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {Credentials} from './entities/credentials';
-import {LogoutSuccess} from './entities/logout-success';
+import 'rxjs/add/operator/timeout';
+import {AuthConfig} from './config/auth.config';
+import {defaultAuthConfig} from './config/auth.default.config';
+import {createLogger} from '../../shared/logger/logger.factory';
+import {RequestParams} from './params/request-params';
 
 @Injectable()
 export class AuthService {
 
-  constructor(private http: HttpClient) { }
+  private isLoggedInParams: RequestParams;
+  private loginParams: RequestParams;
+  private logoutParams: RequestParams;
 
-  static loginSuccess(loginSuccess: LoginSuccess): User {
-    if (loginSuccess.response === 'logged') {
-      return <User>loginSuccess;
+  constructor(private http: HttpClient,
+              @Optional() authConfig: AuthConfig) {
+    if (!authConfig) {
+      authConfig = defaultAuthConfig;
     }
-    if (loginSuccess.response === 'ok') {
-      return <User>loginSuccess;
+    this.isLoggedInParams = authConfig.isLoggedIn;
+    this.loginParams = authConfig.login;
+    this.logoutParams = authConfig.logout;
+  }
+
+  static loginSuccess(ls: LoginSuccess): User {
+    if (ls.response === 'logged' || ls.response === 'ok') {
+      return new User(ls.id, ls.username, ls.roles);
     }
-    return null;
+    return new User();
   }
 
   isLoggedIn(): Observable<User> {
-    return this.http.get<LoginSuccess>(authUriConfig.isLogged)
-      .map(AuthService.loginSuccess);
+    return this.http.get<LoginSuccess>(this.isLoggedInParams.uri)
+      .map(AuthService.loginSuccess)
+      .timeout(this.isLoggedInParams.timeout);
   }
 
   login(credentials: Credentials): Observable<User> {
-    return this.http.post<LoginSuccess>(authUriConfig.login, credentials)
-      .map(AuthService.loginSuccess);
+    return this.http.post<LoginSuccess>(this.loginParams.uri, credentials)
+      .map(AuthService.loginSuccess)
+      .timeout(this.loginParams.timeout);
   }
 
   logout(): Observable<any> {
-    return this.http.get(authUriConfig.logout);
+    return this.http.get(this.logoutParams.uri)
+      .timeout(this.logoutParams.timeout);
   }
 
 }
+
+const log = createLogger(AuthService);

@@ -4,16 +4,16 @@ import {LoginComponent} from './login.component';
 import {LoggedInGuard} from './guards/logged-in.guard';
 import {LogoutComponent} from './logout/logout.component';
 import {NotLoggedInGuard} from './guards/not-logged-in.guard';
-import {loginUriConfig} from './services/config/login-uri.config';
+import {defaultLoginUriConfig} from '../shared/services/login-uri.default.config';
 
 const loginRoutes = [
   {
-    path: loginUriConfig.login,
+    path: defaultLoginUriConfig.login,
     component: LoginComponent,
     canActivate: [NotLoggedInGuard]
   },
   {
-    path: loginUriConfig.logout,
+    path: defaultLoginUriConfig.logout,
     component: LogoutComponent,
     canActivate: [LoggedInGuard]
   }

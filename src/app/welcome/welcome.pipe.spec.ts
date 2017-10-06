@@ -1,4 +1,4 @@
-import { WelcomePipe } from './welcome.pipe';
+import {WelcomePipe} from './welcome.pipe';
 
 describe('WelcomePipe', () => {
   it('create an instance', () => {

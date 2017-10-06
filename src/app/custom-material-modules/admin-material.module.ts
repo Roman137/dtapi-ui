@@ -13,4 +13,4 @@ import {
   imports: [MdButtonModule, MdCheckboxModule, MdInputModule, MdCardModule, MdToolbarModule, MdIconModule],
   exports: [MdButtonModule, MdCheckboxModule, MdInputModule, MdCardModule, MdToolbarModule, MdIconModule]
 })
-export class AppMaterialModule {}
+export class AdminMaterialModule {}

@@ -1,12 +1,11 @@
 import {NgModule} from '@angular/core';
 import {LoginRoutingModule} from './login-routing.module';
 import {LoginComponent} from './login.component';
-import {LoginService} from './services/login.service';
 import {LoginMaterialModule} from '../custom-material-modules/login-material.module';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 import {AuthService} from './services/auth.service';
-import { LogoutComponent } from './logout/logout.component';
+import {LogoutComponent} from './logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +19,6 @@ import { LogoutComponent } from './logout/logout.component';
     FormsModule
   ],
   providers: [
-    LoginService,
     AuthService
   ]
 })

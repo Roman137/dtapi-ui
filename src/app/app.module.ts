@@ -8,9 +8,11 @@ import {NavComponent} from './nav/nav.component';
 import {WelcomeComponent} from './welcome/welcome.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
-import {DomainUrlAppenderInterceptor} from './shared/domain-url-appender.interceptor';
+import {DomainUrlAppenderInterceptor} from './shared/interceptors/domain-url-appender.interceptor';
 import {AppMaterialModule} from './custom-material-modules/app-material.module';
-import { WelcomePipe } from './welcome/welcome.pipe';
+import {WelcomePipe} from './welcome/welcome.pipe';
+import {AdminModule} from './admin/admin.module';
+import {LoginService} from './shared/services/login.service';
 
 @NgModule({
   declarations: [
@@ -20,14 +22,16 @@ import { WelcomePipe } from './welcome/welcome.pipe';
     WelcomePipe
   ],
   imports: [
+    LoginModule,
+    AdminModule,
     BrowserModule,
     BrowserAnimationsModule,
     AppMaterialModule,
     AppRoutingModule,
-    LoginModule
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: DomainUrlAppenderInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: DomainUrlAppenderInterceptor, multi: true},
+    LoginService
   ],
   bootstrap: [AppComponent]
 })

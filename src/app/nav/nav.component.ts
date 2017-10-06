@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {LoginService} from '../login/services/login.service';
-import {loginUriConfig} from '../login/services/config/login-uri.config';
-import {MdIconRegistry} from '@angular/material';
-import {DomSanitizer} from '@angular/platform-browser';
+import {LoginService} from '../shared/services/login.service';
+import {createLogger} from '../shared/logger/logger.factory';
+import {defaultLoginUriConfig} from '../shared/services/login-uri.default.config';
 
 @Component({
   selector: 'app-nav',
@@ -11,8 +10,8 @@ import {DomSanitizer} from '@angular/platform-browser';
 })
 export class NavComponent implements OnInit {
 
-  loginPath = {value: loginUriConfig.login, desc: 'Login'};
-  logoutPath = {value: loginUriConfig.logout, desc: 'Logout'};
+  login = {path: defaultLoginUriConfig.login, desc: 'Login'};
+  logout = {path: defaultLoginUriConfig.logout, desc: 'Logout'};
 
   constructor(public loginService: LoginService) {
   }
@@ -21,3 +20,5 @@ export class NavComponent implements OnInit {
   }
 
 }
+
+const log = createLogger(NavComponent);

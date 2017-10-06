@@ -1,5 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {LoginService} from '../services/login.service';
+import {LoginService} from '../../shared/services/login.service';
+import {Router} from '@angular/router';
+import {createLogger} from '../../shared/logger/logger.factory';
+
 
 @Component({
   selector: 'app-logout',
@@ -8,10 +11,24 @@ import {LoginService} from '../services/login.service';
 })
 export class LogoutComponent implements OnInit {
 
-  constructor(private loginService: LoginService) { }
-
-  ngOnInit() {
-    this.loginService.logout();
+  constructor(private loginService: LoginService, private router: Router) {
   }
 
+  ngOnInit() {
+    this.loginService.logout().subscribe(
+      (hasBeenLoggedOut) => {
+        log.info('hasBeenLoggedOut', hasBeenLoggedOut);
+        if (hasBeenLoggedOut) {
+          this.router.navigate(['']);
+        }
+      },
+      err => {
+      },
+      () => {
+      }
+    );
+  }
 }
+
+
+const log = createLogger(LogoutComponent);

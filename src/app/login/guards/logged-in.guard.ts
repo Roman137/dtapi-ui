@@ -1,31 +1,22 @@
 import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
-import {LoginService} from '../services/login.service';
+import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular/router';
+import {LoginService} from '../../shared/services/login.service';
 import {Log} from 'ng2-logger';
-import {loggerColors} from '../../misc/logger-colors';
+import {loggerColors} from '../../shared/logger/logger-colors';
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
 
 @Injectable()
 export class LoggedInGuard implements CanActivate {
 
   private log = Log.create('LoggedInGuard');
 
-  constructor(private loginService: LoginService, private router: Router) {
+  constructor(private loginService: LoginService) {
     this.log.color = loggerColors.guard;
   }
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     const url: string = state.url;
-
-    if (this.loginService.isLoggedIn()) {
-      return true;
-    }
-    if (url === '/logout') {
-      return false;
-    }
-
-    this.loginService.redirectUrl = url;
-    this.log.info('redirecting to /login', 'savedUrl:', url);
-    this.router.navigate(['/login']);
-    return false;
+    return Observable.of(this.loginService.user.isLogged());
   }
 }

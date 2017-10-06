@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {LoginService} from '../login/services/login.service';
+import {LoginService} from '../shared/services/login.service';
 
 @Component({
   selector: 'app-welcome',
@@ -10,7 +10,7 @@ export class WelcomeComponent implements OnInit {
 
   defaultUserName = 'mortal';
 
-  constructor(public loginService: LoginService) { }
+  constructor(private loginService: LoginService) { }
 
   ngOnInit() {
   }
