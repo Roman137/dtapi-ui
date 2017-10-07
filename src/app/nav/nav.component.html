@@ -4,15 +4,15 @@
        [routerLinkActiveOptions]="{exact: true}">
       <md-icon>home</md-icon>
     </a>
-    <a md-button *ngIf="loginService.user.isAdmin()" color="primary" [routerLink]="'admin'" routerLinkActive="mat-accent">
+    <a md-button *ngIf="loginService.user?.isAdmin()" color="primary" [routerLink]="'admin'" routerLinkActive="mat-accent">
       <md-icon>supervisor_account</md-icon>
     </a>
-    <a md-raised-button *ngIf="!loginService.user.isLogged()" color="primary" style="margin-left: auto"
+    <a md-raised-button *ngIf="!loginService.user?.isLogged()" color="primary" style="margin-left: auto"
        [routerLink]="login.path" routerLinkActive="login active">
       {{login.desc}}
     </a>
-    <span *ngIf="loginService.user.isLogged()" style="margin-left: auto">Logged in as {{loginService.user.username | uppercase}}</span>
-    <a md-button *ngIf="loginService.user.isLogged()" color="primary" [routerLink]="logout.path"
+    <span *ngIf="loginService.user?.isLogged()" style="margin-left: auto">Logged in as {{loginService.user.username | uppercase}}</span>
+    <a md-button *ngIf="loginService.user?.isLogged()" color="primary" [routerLink]="logout.path"
        routerLinkActive="mat-accent">
       {{logout.desc}}
     </a>

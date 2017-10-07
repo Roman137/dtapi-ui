@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {LoginService} from '../login/services/login.service';
-import {defaultLoginUriConfig} from '../shared/config/login-uri.default.config';
+import {defaultLoginUrlConfig} from '../login/config/login-url.default.config';
+import {User} from '../login/services/entities/user';
+import {createLogger} from '../shared/logger/logger.factory';
 
 @Component({
   selector: 'app-nav',
@@ -9,13 +11,14 @@ import {defaultLoginUriConfig} from '../shared/config/login-uri.default.config';
 })
 export class NavComponent implements OnInit {
 
-  login = {path: defaultLoginUriConfig.login, desc: 'Login'};
-  logout = {path: defaultLoginUriConfig.logout, desc: 'Logout'};
+  login = {path: defaultLoginUrlConfig.login, desc: 'Login'};
+  logout = {path: defaultLoginUrlConfig.logout, desc: 'Logout'};
 
   constructor(public loginService: LoginService) {
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
 }
+
+const log = createLogger(NavComponent);

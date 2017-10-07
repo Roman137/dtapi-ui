@@ -8,7 +8,7 @@ import {LoginService} from '../login/services/login.service';
 })
 export class WelcomeComponent implements OnInit {
 
-  constructor(private loginService: LoginService) {
+  constructor(public loginService: LoginService) {
   }
 
   ngOnInit() {

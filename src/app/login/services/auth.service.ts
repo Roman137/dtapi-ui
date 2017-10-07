@@ -5,8 +5,8 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {Credentials} from './entities/credentials';
 import 'rxjs/add/operator/timeout';
-import {AuthConfig} from './config/auth.config';
-import {defaultAuthConfig} from './config/auth.default.config';
+import {AuthConfig} from '../config/auth.config';
+import {defaultAuthConfig} from '../config/auth.default.config';
 import {RequestParams} from './params/request-params';
 
 @Injectable()

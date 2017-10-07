@@ -1,7 +1,13 @@
+import {userDummy} from '../../../../testing/user-dummy';
+
 export class User {
   id: string;
   username: string;
   roles: string[];
+
+  static from(user: User): User {
+    return new User(user.id, user.username, user.roles);
+  }
 
   constructor(id: string = '', username: string = '', roles: string[] = ['']) {
     this.id = id;

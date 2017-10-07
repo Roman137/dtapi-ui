@@ -1,20 +1,23 @@
 import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
-import {LoginComponent} from './login.component';
+import {LoginComponent} from './login/login.component';
 import {LoggedInGuard} from './guards/logged-in.guard';
 import {LogoutComponent} from './logout/logout.component';
 import {NotLoggedInGuard} from './guards/not-logged-in.guard';
-import {defaultLoginUriConfig} from '../shared/config/login-uri.default.config';
-import {RedirectAfterLoginPathSaverGuard} from './guards/redirect-after-login-path-saver.guard';
+import {defaultLoginUrlConfig} from './config/login-url.default.config';
+import {RedirectAfterLoginPathSaverResolver} from './guards/redirect-after-login-path-saver.resolver';
 
 const loginRoutes = [
   {
-    path: defaultLoginUriConfig.login, /// TODO: injectable loginUrlConfig
+    path: defaultLoginUrlConfig.login, /// TODO: injectable loginUrlConfig
     component: LoginComponent,
-    canActivate: [NotLoggedInGuard]
+    canActivate: [NotLoggedInGuard],
+    resolve: {
+      dummy: RedirectAfterLoginPathSaverResolver
+    }
   },
   {
-    path: defaultLoginUriConfig.logout,
+    path: defaultLoginUrlConfig.logout,
     component: LogoutComponent,
     canActivate: [LoggedInGuard]
   }
@@ -30,7 +33,7 @@ const loginRoutes = [
   providers: [
     LoggedInGuard,
     NotLoggedInGuard,
-    RedirectAfterLoginPathSaverGuard
+    RedirectAfterLoginPathSaverResolver
   ]
 })
 export class LoginRoutingModule {

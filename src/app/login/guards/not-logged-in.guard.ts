@@ -15,12 +15,6 @@ export class NotLoggedInGuard implements CanActivate {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-    let url = '';
-      try {
-        url = route.url[route.url.length - 2].toString();
-        this.loginService.redirectAfterLogin = '/' + url;
-      } catch (err) {
-      }
     return this.loginService.isLoggedIn().map(user => !user.isLogged());
   }
 }

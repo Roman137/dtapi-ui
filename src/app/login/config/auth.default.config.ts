@@ -1,5 +1,5 @@
 import {AuthConfig} from './auth.config';
-import {RequestParams} from '../params/request-params';
+import {RequestParams} from '../services/params/request-params';
 
 const prefix = '/login';
 
