@@ -7,6 +7,7 @@ import {FormsModule} from '@angular/forms';
 import {AuthService} from './services/auth.service';
 import {LogoutComponent} from './logout/logout.component';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {LoginService} from './services/login.service';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
     NoopAnimationsModule
   ],
   providers: [
-    AuthService
+    AuthService,
+    LoginService
   ]
 })
 export class LoginModule {

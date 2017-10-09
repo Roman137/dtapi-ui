@@ -1,16 +1,16 @@
 <form class="login-form" (submit)="login()">
-  <md-card>
+  <mat-card>
     <h1>Name yourself, citizen!</h1>
 
-    <md-form-field>
-      <input mdInput [(ngModel)]="credentials.username" id="username" name="username" placeholder="Username">
-    </md-form-field>
-    <md-form-field>
-      <input mdInput [(ngModel)]="credentials.password" id="password" name="password" type="password" placeholder="Password">
-    </md-form-field>
+    <mat-form-field>
+      <input matInput [(ngModel)]="credentials.username" id="username" name="username" placeholder="Username">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [(ngModel)]="credentials.password" id="password" name="password" type="password" placeholder="Password">
+    </mat-form-field>
 
-    <button md-raised-button color="primary">Login</button>
+    <button mat-raised-button color="primary">Login</button>
 
-  </md-card>
+  </mat-card>
 </form>
 

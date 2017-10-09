@@ -1,16 +1,11 @@
 import {NgModule} from '@angular/core';
-
 import {
-  MdButtonModule,
-  MdCardModule,
-  MdCheckboxModule,
-  MdIconModule,
-  MdInputModule,
-  MdToolbarModule
+  MatButtonModule, MatCardModule, MatCheckboxModule, MatIconModule, MatInputModule,
+  MatToolbarModule
 } from '@angular/material';
 
 @NgModule({
-  imports: [MdButtonModule, MdCheckboxModule, MdInputModule, MdCardModule, MdToolbarModule, MdIconModule],
-  exports: [MdButtonModule, MdCheckboxModule, MdInputModule, MdCardModule, MdToolbarModule, MdIconModule]
+  imports: [MatButtonModule, MatCheckboxModule, MatInputModule, MatCardModule, MatToolbarModule, MatIconModule],
+  exports: [MatButtonModule, MatCheckboxModule, MatInputModule, MatCardModule, MatToolbarModule, MatIconModule]
 })
 export class AppMaterialModule {}

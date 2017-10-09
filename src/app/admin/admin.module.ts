@@ -13,7 +13,6 @@ import {FacultiesComponent} from './faculties/faculties.component';
     AdminMaterialModule,
     AdminRoutingModule
   ],
-  declarations: [AdminComponent, StudentsComponent, FacultiesComponent],
-  providers: [LoginService]
+  declarations: [AdminComponent, StudentsComponent, FacultiesComponent]
 })
 export class AdminModule { }

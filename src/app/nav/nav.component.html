@@ -1,21 +1,21 @@
 <nav>
-  <md-toolbar color="default">
-    <a md-button color="primary" [routerLink]="'/'" routerLinkActive="mat-accent"
+  <mat-toolbar color="default">
+    <a mat-button color="primary" [routerLink]="'/'" routerLinkActive="mat-accent"
        [routerLinkActiveOptions]="{exact: true}">
-      <md-icon>home</md-icon>
+      <mat-icon>home</mat-icon>
     </a>
-    <a md-button *ngIf="loginService.user?.isAdmin()" color="primary" [routerLink]="'admin'" routerLinkActive="mat-accent">
-      <md-icon>supervisor_account</md-icon>
+    <a mat-button *ngIf="loginService.user?.isAdmin()" color="primary" [routerLink]="'admin'" routerLinkActive="mat-accent">
+      <mat-icon>supervisor_account</mat-icon>
     </a>
-    <a md-raised-button *ngIf="!loginService.user?.isLogged()" color="primary" style="margin-left: auto"
+    <a mat-raised-button *ngIf="!loginService.user?.isLogged()" color="primary" style="margin-left: auto"
        [routerLink]="login.path" routerLinkActive="login active">
       {{login.desc}}
     </a>
     <span *ngIf="loginService.user?.isLogged()" style="margin-left: auto">Logged in as {{loginService.user.username | uppercase}}</span>
-    <a md-button *ngIf="loginService.user?.isLogged()" color="primary" [routerLink]="logout.path"
+    <a mat-button *ngIf="loginService.user?.isLogged()" color="primary" [routerLink]="logout.path"
        routerLinkActive="mat-accent">
       {{logout.desc}}
     </a>
-  </md-toolbar>
+  </mat-toolbar>
 </nav>
 
